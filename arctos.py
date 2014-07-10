@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import BaseHTTPServer
-import cgi
+import BaseHTTPServer, cgi
 import string
-#import time
 
 alloc = {}
 
@@ -44,10 +42,20 @@ class Request_Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.end_headers()
     alloc[index] = postvars
 
-def main():
-  port = 8080
-  server = BaseHTTPServer.HTTPServer(('', port), Request_Handler)
+def httpd(i, p):
+  server = BaseHTTPServer.HTTPServer((i, p), Request_Handler)
   server.serve_forever()
+
+def main():
+  import argparse
+
+  parser = argparse.ArgumentParser(description='Messaging HTTP server')
+  parser.add_argument('-i', action='store', default="0.0.0.0", help='Interface used (default : all)')
+  parser.add_argument('-p', action='store', type=int, default='8080', help='Port used for listen (default : 8080)')
+  args = parser.parse_args()
+  args = dict(args._get_kwargs())
+
+  httpd(args['i'], args['p'])
 
 if __name__ == "__main__":
     main()
