@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-from arctos import httpd
+from arctosd import httpd
 import daemon
 import os, pwd, grp
 import fcntl
@@ -42,11 +42,21 @@ class PidFile(object):
     os.remove(self.path)
 
 parser = argparse.ArgumentParser(description='Messaging HTTP daemon')
-parser.add_argument('-p', action='store', type=int, default='8080', help='Port used for listen (default : 8080)')
-parser.add_argument('-i', action='store', default="0.0.0.0", help='Interface used (default : all)')
-parser.add_argument('--pid', action='store', default="/var/run/arctos.pid", help='where the pid file should be placed (default : /var/run/arctos.pid')
-parser.add_argument('--user', action='store', default="nobody", help='Change to user when daemonize (default : nobody)')
-parser.add_argument('--group', action='store', default="nogroup", help='Change to group when daemonize (default : nogroup)')
+parser.add_argument('-p', action='store',
+                    type=int, default='8080',
+                    help='Port used for listen (default : 8080)')
+parser.add_argument('-i', action='store',
+                    default="0.0.0.0",
+                    help='Interface used (default : all)')
+parser.add_argument('--pid', action='store',
+                    default="/var/run/arctosd.pid",
+                    help='where the pid file should be placed (default : /var/run/arctosd.pid')
+parser.add_argument('--user', action='store',
+                    default="nobody",
+                    help='Change to user when daemonize (default : nobody)')
+parser.add_argument('--group', action='store',
+                    default="nogroup",
+                    help='Change to group when daemonize (default : nogroup)')
 
 args = parser.parse_args()
 args = dict(args._get_kwargs())
