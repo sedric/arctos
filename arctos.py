@@ -48,13 +48,16 @@ class Request_Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     if not "last" in args:
       while not self.data_present_in_channel(channel):
         time.sleep(1/2)
-      try:
-        if ts < alloc[channel]["ts"]:
-          self.send_data_to_client(channel)
-      except KeyError:
-        # Strange bug, happen when sleep <= 1/2
-        # Might be because it try to read the value when a POST rewrite it
-        pass
+      while True:
+        try:
+          if ts < alloc[channel]["ts"]:
+            self.send_data_to_client(channel)
+            break
+        except KeyError:
+          # Strange bug, happen when sleep <= 1/2
+          # Might be because it try to read the value when a POST rewrite it
+          pass
+        time.sleep(1)
       time.sleep(1/2)
 
     # For thoses who want an answer NOW.
