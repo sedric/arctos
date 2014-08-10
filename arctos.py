@@ -21,16 +21,17 @@ class Request_Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 
   def send_data_to_client(self, channel):
     try:
-      print alloc[channel]["data"]
-    except KeyError, NameError:
-      raise
+      if not alloc[channel]["data"]:
+        raise NameError('No data in channel')
+    except KeyError:
+      raise KeyError('No channel')
     self.send_response(200)
     self.send_header('Content-Length ', len(alloc[channel]["data"]))
     self.send_header('Connection', 'close')
     self.end_headers()
     self.wfile.write(alloc[channel]["data"])
 
-  def send_error_to_client(self, channel):
+  def send_error_to_client(self):
     self.send_response(404)
     self.send_header('Connection', 'close')
     self.end_headers()
@@ -61,7 +62,7 @@ class Request_Handler(BaseHTTPServer.BaseHTTPRequestHandler):
       try:
         self.send_data_to_client(channel)
       except KeyError, NameError:
-        self.send_error_to_client
+        self.send_error_to_client()
 
 
   def do_POST(self):
