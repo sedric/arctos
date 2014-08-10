@@ -45,7 +45,7 @@ arctosd, wich is a tool to launch arctos as a daemon.
     --user USER    Change to user when daemonize (default : nobody)
     --group GROUP  Change to group when daemonize (default : nogroup)
 
-    
+
 How do I use it?
 ================
 
@@ -55,7 +55,8 @@ If I want to send "bar" on the channel "foo", I just have to POST it :
 
       $ wget http://localhost:8080/foo --post-data="bar" -q
 
-Now, if I want to check if I had a message on the channel foo, I'll juste have to GET it.
+Now, if I want to check if I had a message on the channel foo, I'll juste have
+to GET it.
 
 ::
 
@@ -64,4 +65,11 @@ Now, if I want to check if I had a message on the channel foo, I'll juste have t
 
 Simple.
 
-And if I have no message... I'll wait until the channel will get one.
+When you request data, the server will always make you wait for fresh data,
+unless you specify you don't want to :
+
+::
+
+   $ wget http://localhost:8080/foo?last -qO-
+
+If there is no data awailable, it will return a 404 error and no data.
