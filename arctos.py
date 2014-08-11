@@ -22,7 +22,7 @@ class Request_Handler(BaseHTTPServer.BaseHTTPRequestHandler):
   def send_data_to_client(self, channel):
     try:
       if not alloc[channel]["data"]:
-        raise NameError('No data in channel')
+        raise KeyError('No data in channel')
     except KeyError:
       raise KeyError('No channel')
     self.send_response(200)
@@ -64,7 +64,7 @@ class Request_Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     if "last" in args:
       try:
         self.send_data_to_client(channel)
-      except KeyError, NameError:
+      except KeyError:
         self.send_error_to_client()
 
 
