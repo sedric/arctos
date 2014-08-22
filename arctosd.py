@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-from arctosd import httpd
+from arctos import httpd
 import daemon
 import os, pwd, grp
 import fcntl
@@ -44,19 +44,19 @@ class PidFile(object):
 parser = argparse.ArgumentParser(description='Messaging HTTP daemon')
 parser.add_argument('-p', action='store',
                     type=int, default='8080',
-                    help='Port used for listen (default : 8080)')
+                    help='Port used for listen (default : %(default)s)')
 parser.add_argument('-i', action='store',
                     default="0.0.0.0",
-                    help='Interface used (default : all)')
+                    help='Interface used (default : %(default)s)')
 parser.add_argument('--pid', action='store',
                     default="/var/run/arctosd.pid",
-                    help='where the pid file should be placed (default : /var/run/arctosd.pid')
+                    help='where the pid file should be placed (default : %(default)s)')
 parser.add_argument('--user', action='store',
                     default="nobody",
-                    help='Change to user when daemonize (default : nobody)')
+                    help='Change to user when daemonize (default : %(default)s)')
 parser.add_argument('--group', action='store',
                     default="nogroup",
-                    help='Change to group when daemonize (default : nogroup)')
+                    help='Change to group when daemonize (default : %(default)s)')
 
 args = parser.parse_args()
 args = dict(args._get_kwargs())

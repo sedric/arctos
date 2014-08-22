@@ -99,10 +99,10 @@ def main():
   parser = argparse.ArgumentParser(description='Messaging HTTP server')
   parser.add_argument('-i', action='store',
                       default="0.0.0.0",
-                      help='Interface used (default : all)')
+                      help='Interface used (default : %(default)s)')
   parser.add_argument('-p', action='store',
                       type=int, default='8080',
-                      help='Port used for listen (default : 8080)')
+                      help='Port used for listen (default : %(default)s)')
   args = parser.parse_args()
   args = dict(args._get_kwargs())
 
